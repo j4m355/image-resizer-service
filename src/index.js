@@ -4,13 +4,21 @@ const {original, resize} = require("./image");
 
 exports.handler = (event) => new Promise((resolve, reject) => {
     const imageBucket = process.env.IMAGE_BUCKET;
+    const bucketFolder = process.env.BUCKET_FOLDER;
 
     if (!imageBucket) {
         return reject(`Error: Set environment variable IMAGE_BUCKET`);
     }
 
     const path = event.path;
-    const objectKey = url.parse(path).pathname.replace(/^\/+/g, '');
+
+    let objectKey = url.parse(path).pathname.replace(/^\/+/g, '');
+
+    if(bucketFolder){
+        objectKey = bucketFolder + '/' + objectKey;
+    }
+
+
     console.log('INFO: key: ' + objectKey);
 
     const queryParameters = event.queryStringParameters || {};

@@ -6,6 +6,7 @@ module.exports = {
     entry: [
         path.join(__dirname, 'src/index.js')
     ],
+    mode: "production",
     // Specify the output file containing our bundled code
     output: {
         path: __dirname + '/dist',
